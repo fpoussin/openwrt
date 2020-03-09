@@ -1089,3 +1089,28 @@ define KernelPackage/be2net/description
 endef
 
 $(eval $(call KernelPackage,be2net))
+
+
+define KernelPackage/mlx4
+  SUBMENU:=$(NETWORK_DEVICES_MENU)
+  TITLE:=Mellanox Technologies 1/10/40Gbit Ethernet support
+  DEPENDS:=@PCI_SUPPORT
+  FILES:= \
+	$(LINUX_DIR)/drivers/net/ethernet/mellanox/mlx4/mlx4_core.ko \
+	$(LINUX_DIR)/drivers/net/ethernet/mellanox/mlx4/mlx4_en.ko
+  KCONFIG:= \
+	CONFIG_MLX4 \
+	CONFIG_MLX4_CORE=y \
+	CONFIG_MLX4_CORE_GEN2=y \
+	CONFIG_MLX4_DEBUG=y \
+	CONFIG_MLX4_EN_DCB=y \
+        CONFIG_MLX4_EN=y
+
+  AUTOLOAD:=$(call AutoProbe,mlx4)
+endef
+
+define KernelPackage/mlx4/description
+  Mellanox Technologies ConnectX Ethernet
+endef
+
+$(eval $(call KernelPackage,mlx4))
